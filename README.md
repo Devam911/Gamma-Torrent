@@ -66,15 +66,20 @@ Until now, only few features have been completed, rather are yet to implement
 ### ScreenShots
 
 - **Image-1 :** Starting of Torrent; Connecting with the peers <br />
+
 ![Image 1](https://github.com/caped-crusader16/Gamma-Torrent/blob/main/images/img1.png)
 <br /> <br />
 - **Image-2 :** Connecting with peers using Sockets; Handling Handshakes with the connected peers <br />
+
 ![Image 2](https://github.com/caped-crusader16/Gamma-Torrent/blob/main/images/img2.png)
 <br /> <br />
 - **Image-3 :** Handling Handshakes and BitFields with the peers <br />
+
 ![Image 3](https://github.com/caped-crusader16/Gamma-Torrent/blob/main/images/img3.png)
 <br /> <br />
 - **Image-4 :** Handling choke, unchoke peers; Downloading content in pieces <br />
+
+![Image 4](https://github.com/caped-crusader16/Gamma-Torrent/blob/main/images/img4.png)
 
 ### References
 - [BitTorrent Specifications](https://wiki.theory.org/BitTorrentSpecification#Peer_wire_protocol_.28TCP.29)
