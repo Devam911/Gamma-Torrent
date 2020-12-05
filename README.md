@@ -75,7 +75,6 @@ Until now, only few features have been completed, rather are yet to implement
 ![Image 3](https://github.com/caped-crusader16/Gamma-Torrent/blob/main/images/img3.png)
 <br /> <br />
 - **Image-4 :** Handling choke, unchoke peers; Downloading content in pieces <br />
-![Image 4](https://github.com/caped-crusader16/Gamma-Torrent/blob/main/images/img4.png)
 
 ### References
 - [BitTorrent Specifications](https://wiki.theory.org/BitTorrentSpecification#Peer_wire_protocol_.28TCP.29)
