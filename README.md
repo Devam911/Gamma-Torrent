@@ -90,6 +90,10 @@ Until now, only few features have been completed, rather are yet to implement
 - [Reference Article-2](http://dandylife.net/docs/BitTorrent-Protocol.pdf)
 - [Reference Article-3](http://web.cs.ucla.edu/classes/cs217/05BitTorrent.pdf)
 
+## Authors
+
+[**Manav Vagrecha**](https://github.com/caped-crusader16) , [**Devam Shah**](https://github.com/Devam911) , [**Shreyansh Shah**](https://github.com/shreyanshshah27)
+
 ### Support
 
 - If you really like the project then please give us a star :star:
