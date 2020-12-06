@@ -3,15 +3,14 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack, unpack
+import message_d.message_exception as msgexcp
 
 HANDSHAKE_PSTR_V1 = b"BitTorrent protocol"
 HANDSHAKE_PSTR_LEN = len(HANDSHAKE_PSTR_V1)
 LENGTH_PREFIX = 4
 
-class Message_Exception(Exception):
-    pass
-
 class Handshake(object):
+    
     """
         Handshake = <pstrlen><pstr><reserved><info_hash><peer_id>
             - pstrlen = length of pstr (1 byte)

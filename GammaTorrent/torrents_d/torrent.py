@@ -79,7 +79,7 @@ class Torrent(object):
             for understanding the structure of Torrent files containing metainfo
         """
         
-        # creating hash info
+        # creating hash info for handshaking purpose
         raw_info_hash = bencode(self.torrent_file['info'])
         self.info_hash = hashlib.sha1(raw_info_hash).digest()
         self.peer_id = self.generate_peer_id()
@@ -92,9 +92,6 @@ class Torrent(object):
         self.piece_length = self.torrent_file['info']['piece length']
         self.pieces = self.torrent_file['info']['pieces']
         self.number_of_pieces = math.ceil(self.total_length / self.piece_length)
-        
-        #logging.debug(self.announce_list)
-        #logging.debug(self.file_names)
 
         # checking for the lengths.. if equal to zero, it will show an assertion error
         assert(self.total_length > 0)

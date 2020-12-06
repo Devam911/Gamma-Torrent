@@ -3,11 +3,10 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack, unpack
-
-class Message_Exception(Exception):
-    pass
+import message_d.message_exception as msgexcp
 
 class Choke(object):
+
     """
         CHOKE = <length><message_id>
             - payload length = 1 (4 bytes)
@@ -29,6 +28,6 @@ class Choke(object):
     def from_bytes(cls, payload):
         payload_length, message_id = unpack(">IB", payload[:cls.total_length])
         if message_id != cls.message_id:
-            raise Message_Exception("Not a Choke message")
+            raise msgexp.Message_Exception("Not a Choke message")
 
         return Choke()

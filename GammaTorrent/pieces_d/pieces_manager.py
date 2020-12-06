@@ -79,6 +79,7 @@ class PiecesManager(object):
 
         return pieces
 
+    # Loading files
     def _load_files(self):
         files = []
         piece_offset = 0

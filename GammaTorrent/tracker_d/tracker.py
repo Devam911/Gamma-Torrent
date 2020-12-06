@@ -10,7 +10,6 @@ from urllib.parse import urlparse
 from peers_d import peer
 import requests
 from bcoding import bdecode
-from message_d.message import (UdpTrackerAnnounce, UdpTrackerAnnounceOutput, UdpTrackerConnection)
 import tracker_d.socket_address as socket_address
 import tracker_d.http_scrapper as http_scrapper
 import tracker_d.udp_scrapper as udp_scrapper
@@ -45,19 +44,12 @@ class Tracker(object):
 
             # separating HTTP and UTP links and scrapping them
             if str.startswith(tracker_url, "http"):
-#               try:
                     hs = http_scrapper.HttpScrapper(self.torrent, tracker_url, self.dict_sock_addr)
                     self.dict_sock_addr = hs.get_dict_sock_addr()
-                    
-#               except Exception as e:
-#                   logging.error("HTTP scraping failed: %s " % e.__str__())
 
             elif str.startswith(tracker_url, "udp"):
-#                try:
                     us=udp_scrapper.UdpScrapper(self.torrent, tracker_url, self.dict_sock_addr)
                     self.dict_sock_addr = us.get_dict_sock_addr()
-#                except Exception as e:
-#                    logging.error("UDP scraping failed: %s " % e.__str__())
 
             else:
                 print("\033[91m [!] Currently we support only HTTP/UDP trackers..\nWe working on implementing support for : \033[00m%s " % tracker_url)

@@ -3,10 +3,7 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack , unpack
-
-class Message_Exception(Exception):
-    pass
-
+import message_d.message_exception as msgexcp
 
 class Piece(object):
     """
@@ -34,20 +31,14 @@ class Piece(object):
         self.total_length = 4 + self.payload_length
 
     def to_bytes(self):
-        return pack(">IBII{}s".format(self.block_length),
-                    self.payload_length,
-                    self.message_id,
-                    self.piece_index,
-                    self.block_offset,
-                    self.block)
+        return pack(">IBII{}s".format(self.block_length),self.payload_length,self.message_id,self.piece_index,self.block_offset,self.block)
 
     @classmethod
     def from_bytes(cls, payload):
         block_length = len(payload) - 13
-        payload_length, message_id, piece_index, block_offset, block = unpack(">IBII{}s".format(block_length),
-                                                                              payload[:13 + block_length])
+        payload_length, message_id, piece_index, block_offset, block = unpack(">IBII{}s".format(block_length),payload[:13 + block_length])
 
         if message_id != cls.message_id:
-            raise Message_Exception("Not a Piece message")
+            raise msgexcp.Message_Exception("Not a Piece message")
 
         return Piece(block_length, piece_index, block_offset, block)

@@ -3,9 +3,7 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack, unpack
-
-class Message_Exception(Exception):
-    pass
+import message_d.message_exception as msgexcp
 
 class UnChoke(object):
     """
@@ -30,6 +28,6 @@ class UnChoke(object):
         payload_length, message_id = unpack(">IB", payload[:cls.total_length])
 
         if message_id != cls.message_id:
-            raise Message_Exception("Not an UnChoke message")
+            raise msgexcp.Message_Exception("Not an UnChoke message")
 
         return UnChoke()

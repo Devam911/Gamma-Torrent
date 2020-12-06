@@ -13,7 +13,8 @@ import message_d.unchoke as unck
 import message_d.handshake as hdsk
 import message_d.interested as intrstd
 import message_d.notinterested as notinterested
-
+import message_d.message_exception as msgexcp
+import message_d.keepalive as keepalive
 
 class Peer(object):
     def __init__(self, number_of_pieces, ip, port=6881):    # initializing the variables 
@@ -170,9 +171,9 @@ class Peer(object):
 
     def _handle_keep_alive(self):
         try:
-            keep_alive = message.KeepAlive.from_bytes(self.read_buffer)
+            keep_alive = keepalive.KeepAlive.from_bytes(self.read_buffer)
             print('\033[96m [>] Handle : Keep Alive - \033[00m%s' % self.ip)
-        except message.Message_Exception:
+        except msgexcp.Message_Exception:
             return False
         except Exception:
             logging.exception("\033[91m [!] Error KeepALive, (need at least 4 bytes : \033[00m{}\033[91m)\033[00m".format(len(self.read_buffer)))
@@ -199,5 +200,5 @@ class Peer(object):
                 received_message = message.MessageDispatcher(payload).dispatch()
                 if received_message:
                     yield received_message
-            except message.Message_Exception as e:
+            except msgexcp.Message_Exception as e:
                 logging.exception(e.__str__())

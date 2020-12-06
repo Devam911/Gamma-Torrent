@@ -3,11 +3,10 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack, unpack
-
-class Message_Exception(Exception):
-    pass
+import message_d.message_exception as msgexcp
 
 class Cancel(object):
+
     """CANCEL = <length><message id><piece index><block offset><block length>
         - length = 13 (4 bytes)
         - message id = 8 (1 byte)
@@ -36,9 +35,8 @@ class Cancel(object):
 
     @classmethod
     def from_bytes(cls, payload):
-        payload_length, message_id, piece_index, block_offset, block_length = unpack(">IBIII",
-                                                                                     payload[:cls.total_length])
+        payload_length, message_id, piece_index, block_offset, block_length = unpack(">IBIII",payload[:cls.total_length])
         if message_id != cls.message_id:
-            raise Message_Exception("Not a Cancel message")
+            raise msgexcp.Message_Exception("Not a Cancel message")
 
         return Cancel(piece_index, block_offset, block_length)

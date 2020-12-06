@@ -3,9 +3,7 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack, unpack
-
-class Message_Exception(Exception):
-    pass
+import message_d.message_exception as msgexcp
 
 class Port(object):
     """
@@ -32,6 +30,6 @@ class Port(object):
         payload_length, message_id, listen_port = unpack(">IBI", payload[:cls.total_length])
 
         if message_id != cls.message_id:
-            raise Message_Exception("Not a Port message")
+            raise msgexcp.Message_Exception("Not a Port message")
 
         return Port(listen_port)

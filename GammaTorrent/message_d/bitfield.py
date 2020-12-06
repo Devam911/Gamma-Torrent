@@ -4,9 +4,7 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 from struct import pack, unpack
 import bitstring
-
-class Message_Exception(Exception):
-    pass
+import message_d.message_exception as msgexcp
 
 class BitField(object):
     """
@@ -42,7 +40,7 @@ class BitField(object):
         bitfield_length = payload_length - 1
 
         if message_id != cls.message_id:
-            raise Message_Exception("Not a BitField message")
+            raise msgexp.Message_Exception("Not a BitField message")
 
         raw_bitfield, = unpack(">{}s".format(bitfield_length), payload[5:5 + bitfield_length])
         bitfield = bitstring.BitArray(bytes=bytes(raw_bitfield))

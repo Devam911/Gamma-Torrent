@@ -3,9 +3,7 @@ __email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.
 
 
 from struct import pack, unpack
-
-class Message_Exception(Exception):
-    pass
+import message_d.message_exception as msgexcp
 
 class Request(object):
     """
@@ -34,9 +32,8 @@ class Request(object):
 
     @classmethod
     def from_bytes(cls, payload):
-        payload_length, message_id, piece_index, block_offset, block_length = unpack(">IBIII",
-                                                                                     payload[:cls.total_length])
+        payload_length, message_id, piece_index, block_offset, block_length = unpack(">IBIII",payload[:cls.total_length])
         if message_id != cls.message_id:
-            raise Message_Exception("Not a Request message")
+            raise msgexp.Message_Exception("Not a Request message")
 
         return Request(piece_index, block_offset, block_length)

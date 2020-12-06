@@ -9,6 +9,7 @@ import socket
 import time
 from threading import Thread
 
+import message_d.keepalive as ka
 import message_d.message as msg
 import message_d.request as req
 import message_d.choke as chk
@@ -172,7 +173,7 @@ class PeersManager(Thread):
         raise Exception("\033[91m [!] Error : Peer not present in peer_list \033[00m")
 
     def _process_new_message(self, new_message: msg.Message, peer: peer.Peer):
-        if isinstance(new_message, hdsk.Handshake) or isinstance(new_message, msg.KeepAlive):
+        if isinstance(new_message, hdsk.Handshake) or isinstance(new_message, ka.KeepAlive):
             logging.error("\033[96m [!] Error : Handshake or Keep-ALive should have already been handled\033[00m")
 
         elif isinstance(new_message, chk.Choke):
