@@ -7,12 +7,14 @@ import message_d.message_exception as msgexcp
 
 class Cancel(object):
 
-    """CANCEL = <length><message id><piece index><block offset><block length>
-        - length = 13 (4 bytes)
-        - message id = 8 (1 byte)
-        - piece index = zero based piece index (4 bytes)
-        - block offset = zero based of the requested block (4 bytes)
-        - block length = length of the requested block (4 bytes)"""
+    # CANCEL = <length><message id><piece index><block offset><block length>
+    #     - length = 13 (4 bytes)
+    #     - message id = 8 (1 byte)
+    #     - piece index = zero based piece index (4 bytes)
+    #     - block offset = zero based of the requested block (4 bytes)
+    #     - block length = length of the requested block (4 bytes)
+
+
     message_id = 8
 
     payload_length = 13
@@ -26,12 +28,7 @@ class Cancel(object):
         self.block_length = block_length
 
     def to_bytes(self):
-        return pack(">IBIII",
-                    self.payload_length,
-                    self.message_id,
-                    self.piece_index,
-                    self.block_offset,
-                    self.block_length)
+        return pack(">IBIII", self.payload_length,self.message_id,self.piece_index,self.block_offset,self.block_length)
 
     @classmethod
     def from_bytes(cls, payload):

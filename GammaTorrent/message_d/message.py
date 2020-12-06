@@ -13,7 +13,6 @@ from message_d.request import Request
 from message_d.unchoke import UnChoke
 from message_d.interested import Interested
 from message_d.notinterested import NotInterested
-from message_d.handshake import Handshake
 from message_d.have import Have
 from message_d.cancel import Cancel
 from message_d.bitfield import BitField

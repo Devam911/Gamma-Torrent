@@ -6,11 +6,11 @@ from struct import pack, unpack
 import message_d.message_exception as msgexcp
 
 class UnChoke(object):
-    """
-        UnChoke = <length><message_id>
-            - payload length = 1 (4 bytes)
-            - message id = 1 (1 byte)
-    """
+    
+        # UnChoke = <length><message_id>
+        #     - payload length = 1 (4 bytes)
+        #     - message id = 1 (1 byte)
+    
     message_id = 1
     chokes_me = False
 

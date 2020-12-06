@@ -7,11 +7,10 @@ import message_d.message_exception as msgexcp
 
 class Choke(object):
 
-    """
-        CHOKE = <length><message_id>
-            - payload length = 1 (4 bytes)
-            - message id = 0 (1 byte)
-    """
+        # CHOKE = <length><message_id>
+        #     - payload length = 1 (4 bytes)
+        #     - message id = 0 (1 byte)
+    
     message_id = 0
     chokes_me = True
 

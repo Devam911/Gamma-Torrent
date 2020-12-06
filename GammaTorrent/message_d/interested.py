@@ -6,11 +6,11 @@ from struct import pack, unpack
 import message_d.message_exception as msgexcp
 
 class Interested(object):
-    """
-        INTERESTED = <length><message_id>
-            - payload length = 1 (4 bytes)
-            - message id = 2 (1 byte)
-    """
+    #
+    #    INTERESTED = <length><message_id>
+    #        - payload length = 1 (4 bytes)
+    #        - message id = 2 (1 byte)
+    #
     message_id = 2
     interested = True
 
@@ -21,6 +21,7 @@ class Interested(object):
         super(Interested, self).__init__()
 
     def to_bytes(self):
+        print("[>><<] Send Message (Interested) : ", self.payload_length, self.message_id)
         return pack(">IB", self.payload_length, self.message_id)
 
     @classmethod

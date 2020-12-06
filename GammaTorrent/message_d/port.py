@@ -6,12 +6,12 @@ from struct import pack, unpack
 import message_d.message_exception as msgexcp
 
 class Port(object):
-    """
-        PORT = <length><message id><port number>
-            - length = 5 (4 bytes)
-            - message id = 9 (1 byte)
-            - port number = listen_port (4 bytes)
-    """
+    
+        # PORT = <length><message id><port number>
+        #     - length = 5 (4 bytes)
+        #     - message id = 9 (1 byte)
+        #     - port number = listen_port (4 bytes)
+    
     message_id = 9
 
     payload_length = 5

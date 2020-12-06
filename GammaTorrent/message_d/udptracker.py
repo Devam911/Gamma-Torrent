@@ -1,3 +1,7 @@
+__author__ = ["Manav Vagrecha", "Shreyansh Shah", "Devam Shah"]
+__email__ = ["manavkumar.v@ahduni.edu.in", "shreyansh.s1@ahduni.edu.in", "devam.s1@ahduni.edu.in"]
+
+
 from struct import pack, unpack
 import random
 import socket
@@ -5,11 +9,11 @@ import socket
 class UdpTrackerConnection(object):
 
     #    connect = <connection_id><action><transaction_id>
-    #         connection_id   64-bit int
-    #         action          32-bit int
-    #         transaction_id  32-bit int
+    #         connection_id   8-bytes int
+    #         action          4-bytes int
+    #         transaction_id  4-bytes int
     #
-    #    Total length = 64 + 32 + 32 = 128 bytes
+    #    Total length = 8 + 4 + 4 = 16 bytes
 
     def __init__(self):
         super(UdpTrackerConnection, self).__init__()
@@ -122,6 +126,7 @@ class UdpTrackerAnnounceOutput:
 
         # socket address : <IP(4 bytes)><Port(2 bytes)>
         # len(socket addr) == 6 bytes
+
         for i in range(int(len(raw_bytes) / 6)):
             start = i * 6
             end = start + 6

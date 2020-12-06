@@ -45,7 +45,7 @@ class MainManager(object):
         # scrapping data from trackers
         peers_dict = self.tracker.get_peers_from_trackers()
 
-        # adding peers to the list
+        # adding peers to the list who have completed handshake
         self.peers_manager.add_peers(peers_dict.values())
 
         # Looping until all the pieces are completed
@@ -65,7 +65,7 @@ class MainManager(object):
                 if self.pieces_manager.pieces[index].is_full:
                     continue
                 
-                # select any random peer from the list who has the piece
+                # select any random peer from the list who meets the conditions
                 peer = self.peers_manager.get_random_peer_having_piece(index)
                 if not peer:
                     continue

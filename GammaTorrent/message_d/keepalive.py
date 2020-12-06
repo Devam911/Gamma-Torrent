@@ -6,10 +6,10 @@ from struct import pack, unpack
 import message_d.message_exception as msgexcp
 
 class KeepAlive(object):
-    """
-        KEEP_ALIVE = <length>
-            - payload length = 0 (4 bytes)
-    """
+    #
+    #    KEEP_ALIVE = <length>
+    #        - payload length = 0 (4 bytes)
+    
     payload_length = 0
     total_length = 4
 

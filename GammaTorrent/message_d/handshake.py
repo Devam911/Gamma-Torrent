@@ -11,16 +11,16 @@ LENGTH_PREFIX = 4
 
 class Handshake(object):
     
-    """
-        Handshake = <pstrlen><pstr><reserved><info_hash><peer_id>
-            - pstrlen = length of pstr (1 byte)
-            - pstr = string identifier of the protocol: "BitTorrent protocol" (19 bytes)
-            - reserved = 8 reserved bytes indicating extensions to the protocol (8 bytes)
-            - info_hash = hash of the value of the 'info' key of the torrent file (20 bytes)
-            - peer_id = unique identifier of the Peer (20 bytes)
+    
+        # Handshake = <pstrlen><pstr><reserved><info_hash><peer_id>
+        #     - pstrlen = length of pstr (1 byte)
+        #     - pstr = string identifier of the protocol: "BitTorrent protocol" (19 bytes)
+        #     - reserved = 8 reserved bytes indicating extensions to the protocol (8 bytes)
+        #     - info_hash = hash of the value of the 'info' key of the torrent file (20 bytes)
+        #     - peer_id = unique identifier of the Peer (20 bytes)
 
-        Total length = payload length = 49 + len(pstr) = 68 bytes (for BitTorrent v1)
-    """
+        # Total length = payload length = 49 + len(pstr) = 68 bytes (for BitTorrent v1)
+    
     payload_length = 68
     total_length = payload_length
 

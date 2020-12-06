@@ -7,12 +7,12 @@ import bitstring
 import message_d.message_exception as msgexcp
 
 class BitField(object):
-    """
-        BITFIELD = <length><message id><bitfield>
-            - payload length = 1 + bitfield_size (4 bytes)
-            - message id = 5 (1 byte)
-            - bitfield = bitfield representing downloaded pieces (bitfield_size bytes)
-    """
+    
+        # BITFIELD = <length><message id><bitfield>
+        #     - payload length = 1 + bitfield_size (4 bytes)
+        #     - message id = 5 (1 byte)
+        #     - bitfield = bitfield representing downloaded pieces (bitfield_size bytes)
+    
     message_id = 5
 
     # Unknown until given a bitfield
@@ -29,10 +29,7 @@ class BitField(object):
         self.total_length = 4 + self.payload_length
 
     def to_bytes(self):
-        return pack(">IB{}s".format(self.bitfield_length),
-                    self.payload_length,
-                    self.message_id,
-                    self.bitfield_as_bytes)
+        return pack(">IB{}s".format(self.bitfield_length),self.payload_length,self.message_id, self.bitfield_as_bytes)
 
     @classmethod
     def from_bytes(cls, payload):
