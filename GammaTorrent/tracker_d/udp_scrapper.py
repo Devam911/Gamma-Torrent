@@ -36,23 +36,30 @@ class UdpScrapper(object):
         if ipaddress.ip_address(ip).is_private:
             return
 
-        # connection UDP Tracker
+        # connection UDP Tracker and creating tracker input having transaction_id, connection_id and action
         tracker_connection_input = udptracker.UdpTrackerConnection()
+
+        # sending data as message to the created socket and getting the response.
         response = self.send_message((ip, port), sock, tracker_connection_input)
 
         if not response:
             raise Exception("\033[95m [?] No response for UdpTrackerConnection\033[00m")
-
+        
+        # decoding and defragmenting the response from the tracker into different elements
         tracker_connection_output = udptracker.UdpTrackerConnection()
         tracker_connection_output.from_bytes(response)
 
+        # Announcing the packet
         tracker_announce_input = udptracker.UdpTrackerAnnounce(self.torrent.info_hash, tracker_connection_output.conn_id,self.torrent.peer_id)
+        # sending data as message to the created socket and getting the response.
         response = self.send_message((ip, port), sock, tracker_announce_input)
 
         if not response:
             raise Exception("\033[95m [?] No response for UdpTrackerAnnounce\033[00m")
-
+        
+        # announcing the output
         tracker_announce_output = udptracker.UdpTrackerAnnounceOutput()
+        # getting content from the enxrypted response
         tracker_announce_output.from_bytes(response)
 
         for ip, port in tracker_announce_output.list_sock_addr:
@@ -67,14 +74,17 @@ class UdpScrapper(object):
         return self.dict_sock_addr
 
     def send_message(self, conn, sock, tracker_message):
+        # Encoding the message in a string representation
         message = tracker_message.to_bytes()
         trans_id = tracker_message.trans_id
         action = tracker_message.action
         size = len(message)
 
+        # sending the encoded message to the given conn = (ip and port)
         sock.sendto(message, conn)
 
         try:
+            # reading response from the socket which returns the data.
             response = peers_manager.PeersManager._read_from_socket(sock)
         except socket.timeout as e:
             logging.debug("\033[91m [!] Timeout : \033[00m%s" % e)
@@ -89,4 +99,5 @@ class UdpScrapper(object):
         if action != response[0:4] or trans_id != response[4:8]:
             print("\033[91m [!] Transaction-ID did not match\033[00m")
 
+        # returns the data if there is not issue as mentioned above.
         return response

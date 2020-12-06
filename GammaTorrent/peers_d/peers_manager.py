@@ -92,18 +92,18 @@ class PeersManager(Thread):
         while True:
             try:
                 # Receives 4096 bytes and returns 0 when the string is empty.
-                buff = sock.recv(4096)      # Setting buffer size of 512 Bytes
-                if len(buff) <= 0:          # negative or zero length then return
+                buff = sock.recv(4096)
+                if len(buff) <= 0:
                     break
 
-                data += buff                # adding buffer to data 
+                data += buff                # concatnating the content of buffer to data.
             except socket.error as e:
                 err = e.args[0]
                 if err != errno.EAGAIN or err != errno.EWOULDBLOCK:
-                    logging.debug(" [>] Wrong errno {}".format(err))
+                    logging.debug(" [!] Error No : {}".format(err))
                 break
             except Exception:
-                logging.exception("Recv failed")
+                logging.exception(" [!] Recv failed")
                 break
 
         return data

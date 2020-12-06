@@ -1,60 +1,64 @@
 from struct import pack, unpack
 import random
 import socket
-"""
-UDP Tracker
-"""
-
 
 class UdpTrackerConnection(object):
-    """
-        connect = <connection_id><action><transaction_id>
-            - connection_id = 64-bit integer
-            - action = 32-bit integer
-            - transaction_id = 32-bit integer
 
-        Total length = 64 + 32 + 32 = 128 bytes
-    """
+    #    connect = <connection_id><action><transaction_id>
+    #         connection_id   64-bit int
+    #         action          32-bit int
+    #         transaction_id  32-bit int
+    #
+    #    Total length = 64 + 32 + 32 = 128 bytes
 
     def __init__(self):
         super(UdpTrackerConnection, self).__init__()
+        
+        # string representation
+        # connection_id in unsigned long long int in big endian binary format
         self.conn_id = pack('>Q', 0x41727101980)
+
+        # actions in unsigned int in big endian binary format
         self.action = pack('>I', 0)
+
+        # transaction_id in unsigned int in big endian binary format
         self.trans_id = pack('>I', random.randint(0, 100000))
 
     def to_bytes(self):
         return self.conn_id + self.action + self.trans_id
 
     def from_bytes(self, payload):
+
+        # from binary bit string format to respect formats given
         self.action, = unpack('>I', payload[:4])
         self.trans_id, = unpack('>I', payload[4:8])
         self.conn_id, = unpack('>Q', payload[8:])
 
 
 class UdpTrackerAnnounce(object):
-    """
-        connect = <connection_id><action><transaction_id>
+    
+        # connect = <connection_id><action><transaction_id>
 
-        0	64-bit integer	connection_id
-8	32-bit integer	action	1
-12	32-bit integer	transaction_id
-16	20-byte string	info_hash
-36	20-byte string	peer_id
-56	64-bit integer	downloaded
-64	64-bit integer	left
-72	64-bit integer	uploaded
-80	32-bit integer	event
-84	32-bit integer	IP address	0
-88	32-bit integer	key
-92	32-bit integer	num_want	-1
-96	16-bit integer	port
+        # 0-7	    8-byte int	connection_id
+        # 8-11	    4-byte int	action	1
+        # 12-15 	4-byte int	transaction_id
+        # 16-35	    4-byte str	info_hash
+        # 36-55    	20-byte str	peer_id
+        # 56-63	    8-byte int	downloaded
+        # 64-71	    8-byte int	left
+        # 72-79	    8-byte int	uploaded
+        # 80-83	    4-byte int	event
+        # 84-87	    4-byte int	IP address	0
+        # 88-91	    4-byte int	key
+        # 92-95	    4-byte int	num_want	-1
+        # 96-97	    2-byte int	port
 
-            - connection_id = 64-bit integer
-            - action = 32-bit integer
-            - transaction_id = 32-bit integer
+        #     - connection_id = 64-bit (8-byte) int
+        #     - action = 32-bit (4-byte) int
+        #     - transaction_id = 32-bit (4-byte) int
 
-        Total length = 64 + 32 + 32 = 128 bytes
-    """
+        # Total length = 8 + 4 + 4 = 16 bytes
+    
 
     def __init__(self, info_hash, conn_id, peer_id):
         super(UdpTrackerAnnounce, self).__init__()
@@ -78,25 +82,24 @@ class UdpTrackerAnnounce(object):
         num_want = pack('>i', -1)
         port = pack('>h', 8000)
 
+        # concatnating the strings
         msg = (conn_id + action + trans_id + self.info_hash + self.peer_id + downloaded + left + uploaded + event + ip + key + num_want + port)
 
         return msg
 
 
 class UdpTrackerAnnounceOutput:
-    """
-        connect = <connection_id><action><transaction_id>
+    
+        # connect = <connection_id><action><transaction_id>
 
-0	32-bit integer	action	1
-4	32-bit integer	transaction_id
-8	32-bit integer	interval
-12	32-bit integer	leechers
-16	32-bit integer	seeders
-20 + 6 * n	32-bit integer	IP address
-24 + 6 * n	16-bit integer	TCP port
-20 + 6 * N
-
-    """
+        # 0-3	            32-bit int	action	1
+        # 4-7	            32-bit int	transaction_id
+        # 8-11	            32-bit int	interval
+        # 12-15	            32-bit int	leechers
+        # 16-20 	        32-bit int	seeders
+        # 20 + 6 * n    	32-bit int	IP address
+        # 24 + 6 * n	    16-bit int	TCP port
+        # 20 + 6 * N    
 
     def __init__(self):
         self.action = None
