@@ -122,18 +122,17 @@ class Peer(object):
         # pub.sendMessage('RarestPiece.updatePeersBitfield', bitfield=self.bit_field)
 
     def handle_bitfield(self, bitfield):
-        """
-        :type bitfield: message.BitField
-        """
+        
+        # type bitfield: message.BitField
+        
         print('\033[96m [>] Handle : Bitfield - \033[00m%s\033[96m - \033[00m%s' % (self.ip, bitfield.bitfield))
         self.bit_field = bitfield.bitfield
 
         if self.is_choking() and not self.state['am_interested']:
             interested = intrstd.Interested().to_bytes()
+            #print("[>><<] Send to Peer : interested")
             self.send_to_peer(interested)
             self.state['am_interested'] = True
-
-        # pub.sendMessage('RarestPiece.updatePeersBitfield', bitfield=self.bit_field)
 
     def handle_request(self, request):
         """
@@ -157,6 +156,7 @@ class Peer(object):
 
     def _handle_handshake(self):
         try:
+            # extracting the message of handshake
             handshake_message = hdsk.Handshake.from_bytes(self.read_buffer)
             self.has_handshaked = True
             self.read_buffer = self.read_buffer[handshake_message.total_length:]
@@ -183,7 +183,10 @@ class Peer(object):
         return True
 
     def get_messages(self):
+        # if client is healthy and the buffer crosses 9999 bytes of data then
         while len(self.read_buffer) > 4 and self.healthy:
+
+            # if not handshaked, we will try to send keep-alive            
             if (not self.has_handshaked and self._handle_handshake()) or self._handle_keep_alive():
                 continue
 
@@ -199,6 +202,7 @@ class Peer(object):
             try:
                 received_message = message.MessageDispatcher(payload).dispatch()
                 if received_message:
+                    print(" [<<>>] Received Message : ", received_message)
                     yield received_message
             except msgexcp.Message_Exception as e:
                 logging.exception(e.__str__())

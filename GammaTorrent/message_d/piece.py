@@ -6,14 +6,14 @@ from struct import pack , unpack
 import message_d.message_exception as msgexcp
 
 class Piece(object):
-    """
-        PIECE = <length><message id><piece index><block offset><block>
-        - length = 9 + block length (4 bytes)
-        - message id = 7 (1 byte)
-        - piece index =  zero based piece index (4 bytes)
-        - block offset = zero based of the requested block (4 bytes)
-        - block = block as a bytestring or bytearray (block_length bytes)
-    """
+    
+        # PIECE = <length><message id><piece index><block offset><block>
+        # - length = 9 + block length (4 bytes)
+        # - message id = 7 (1 byte)
+        # - piece index =  zero based piece index (4 bytes)
+        # - block offset = zero based of the requested block (4 bytes)
+        # - block = block as a bytestring or bytearray (block_length bytes)
+
     message_id = 7
 
     payload_length = -1

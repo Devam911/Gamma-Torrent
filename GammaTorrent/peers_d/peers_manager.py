@@ -61,11 +61,12 @@ class PeersManager(Thread):
                 self.pieces_by_peer[i][1].append(peer)
                 self.pieces_by_peer[i][0] = len(self.pieces_by_peer[i][1])
 
-    # sending any random peer who has the piece.
+    # sending any random peer who meets the conditions
     def get_random_peer_having_piece(self, index):
         ready_peers = []
 
         for peer in self.peers:
+            # conditions for selecting a peer is that it should be eligible, unchoked, interested to share and should contain the piece
             if peer.is_eligible() and peer.is_unchoked() and peer.am_interested() and peer.has_piece(index):
                 ready_peers.append(peer)
 
@@ -108,26 +109,33 @@ class PeersManager(Thread):
 
         return data
 
+    # thread.run function
     def run(self):
+        # if client is active, it will receive data from the socket
         while self.is_active:
             read = [peer.socket for peer in self.peers]
             read_list, _, _ = select.select(read, [], [], 1)
 
             for socket in read_list:
+                # getting the peer having same socket
                 peer = self.get_peer_by_socket(socket)
+
+                # if the peer is not healthy then remove the peer.
                 if not peer.healthy:
                     self.remove_peer(peer)
                     continue
 
                 try:
+                    # getting payload data from the socket.
                     payload = self._read_from_socket(socket)
                 except Exception as e:
                     printf("\033[91m [!] Error : Recv failed \033[00m%s" % e.__str__())
                     self.remove_peer(peer)
                     continue
-
+                
+                # total payload added
                 peer.read_buffer += payload
-
+                
                 for message in peer.get_messages():
                     self._process_new_message(message, peer)
 

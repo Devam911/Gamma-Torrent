@@ -6,12 +6,12 @@ from struct import pack , unpack
 import message_d.message_exception as msgexcp
 
 class Have(object):
-    """
-        HAVE = <length><message_id><piece_index>
-            - payload length = 5 (4 bytes)
-            - message_id = 4 (1 byte)
-            - piece_index = zero based index of the piece (4 bytes)
-    """
+    
+        # HAVE = <length><message_id><piece_index>
+        #     - payload length = 5 (4 bytes)
+        #     - message_id = 4 (1 byte)
+        #     - piece_index = zero based index of the piece (4 bytes)
+    
     message_id = 4
 
     payload_length = 5

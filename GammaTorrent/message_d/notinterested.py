@@ -6,11 +6,11 @@ from struct import pack, unpack
 import message_d.message_exception as msgexcp
 
 class NotInterested(object):
-    """
-        NOT INTERESTED = <length><message_id>
-            - payload length = 1 (4 bytes)
-            - message id = 3 (1 byte)
-    """
+
+        # NOT INTERESTED = <length><message_id>
+        #     - payload length = 1 (4 bytes)
+        #     - message id = 3 (1 byte)
+
     message_id = 3
     interested = False
 
